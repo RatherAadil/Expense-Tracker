@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 function ExpenseTable({ expenses }) {
   return (
@@ -54,7 +54,7 @@ function ExpenseTable({ expenses }) {
         <tr>
           <th>Total</th>
           <th></th>
-          <th>₹8100</th>
+          <th>₹{}</th>
         </tr>
       </tbody>
     </table>
