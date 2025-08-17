@@ -42,7 +42,7 @@ function ExpenseForm({ setExpenses }) {
     if (Object.keys(validateResult).length) return;
     setExpenses((prevState) => [
       ...prevState,
-      { ...expense, id: crypto.randomUUID() },
+      { ...expense, id: crypto.randomUUID(), amount: Number(expense.amount) },
     ]);
 
     setExpense({
@@ -68,6 +68,7 @@ function ExpenseForm({ setExpenses }) {
         value={expense.title}
         onChange={handleChange}
         error={errors.title}
+        type={"text"}
       />
       <Select
         label={"Category"}
@@ -86,6 +87,7 @@ function ExpenseForm({ setExpenses }) {
         value={expense.amount}
         onChange={handleChange}
         error={errors.amount}
+        type={"number"}
       />
       <button className="add-btn">Add</button>
     </form>
