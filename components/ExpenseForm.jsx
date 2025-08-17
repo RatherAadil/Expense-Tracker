@@ -2,12 +2,13 @@ import React, { useRef, useState } from "react";
 import Input from "./Input";
 import Select from "./Select";
 
-function ExpenseForm({ setExpenses }) {
-  const [expense, setExpense] = useState({
-    title: "",
-    category: "",
-    amount: "",
-  });
+function ExpenseForm({
+  setExpenses,
+  expense,
+  setExpense,
+  editingRowId,
+  setEditingRowId,
+}) {
   const [errors, setErrors] = useState({});
   const validationConfig = {
     title: [
@@ -25,7 +26,7 @@ function ExpenseForm({ setExpenses }) {
           errorsData[key] = rule.message;
           return true;
         }
-        if (rule.minLength && value.length < 5) {
+        if (rule.minLength && value.length < 3) {
           errorsData[key] = rule.message;
           return true;
         }
@@ -40,9 +41,27 @@ function ExpenseForm({ setExpenses }) {
     e.preventDefault();
     const validateResult = validate(expense);
     if (Object.keys(validateResult).length) return;
+
+    if (editingRowId) {
+      setExpenses((prevState) =>
+        prevState.map((prevExpense) => {
+          if (prevExpense.id === editingRowId) {
+            return { ...expense, id: editingRowId };
+          }
+          return prevExpense;
+        })
+      );
+      setExpense({
+        title: "",
+        category: "",
+        amount: "",
+      });
+      setEditingRowId("");
+      return;
+    }
     setExpenses((prevState) => [
       ...prevState,
-      { ...expense, id: crypto.randomUUID(), amount: Number(expense.amount) },
+      { ...expense, id: crypto.randomUUID() },
     ]);
 
     setExpense({
@@ -89,7 +108,7 @@ function ExpenseForm({ setExpenses }) {
         error={errors.amount}
         type={"number"}
       />
-      <button className="add-btn">Add</button>
+      <button className="add-btn">{editingRowId ? "Save" : "Add"}</button>
     </form>
   );
 }
