@@ -36,11 +36,13 @@ main {
   outline: none;
 }
 
-.amount-column div {
+.amount-column div,
+.title-column div {
   display: flex;
 }
 
-.amount-column span {
+.amount-column span,
+.title-column span {
   margin-right: 6px;
 }
 
@@ -118,6 +120,9 @@ main {
 #category {
   font: inherit;
   height: 28px;
+}
+.clear-sort {
+  cursor: pointer;
 }
 .error {
   font-size: 12px;
