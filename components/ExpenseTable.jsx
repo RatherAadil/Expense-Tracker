@@ -9,6 +9,7 @@ function ExpenseTable({ expenses, setExpenses, setExpense, setEditingRowId }) {
   const [sortCallback, setSortCallback] = useState(() => {
     return () => {};
   });
+
   const total = filteredData.reduce(
     (acc, curr) => acc + parseFloat(curr.amount),
     0
